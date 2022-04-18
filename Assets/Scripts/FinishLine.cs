@@ -6,15 +6,22 @@ using UnityEngine.SceneManagement;
 public class FinishLine : MonoBehaviour
 {
 
-    // Delay variable
+    // Serialized delay amount variable
     [SerializeField] float delayAmount = 1f;
+
+    // Serialized particle system named as the finish effect created in hierarchy.
+    // In Unity, the finish effect asset in hierarchy must be manually linked to the script component.
+    [SerializeField] ParticleSystem finishEffect;
+
     // Finish line behaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // If the gameobject controlled by the player collides with the trigger...
         if (other.tag == "Player")
         {
-            // ... reload level 1 at the beginning
+            // Play the finish particle effect
+            finishEffect.Play();
+            // And reload level 1 at the beginning
             // with using a delay thanks to the Invoke method.
             Invoke("ReloadScene", delayAmount);
         }
