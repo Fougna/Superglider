@@ -19,6 +19,9 @@ public class SupergliderController : MonoBehaviour
     // Creation of a Surface effector component variable.
     SurfaceEffector2D surfaceEffector2D;
 
+    // Boolean variable allowing the player to control the character set to true by default.
+    bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,26 +36,21 @@ public class SupergliderController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Call player controls.
-        RotatePlayer();
+        // If the player's allowed to move...
+        if (canMove)
+        {
+            // Call player controls.
+            RotatePlayer();
 
-        // Call player booster.
-        RespondToBoost();
+            // Call player booster.
+            RespondToBoost();
+        }
     }
-    void RespondToBoost ()
+
+    // Controls disabling method to prevent the player from moving.
+    public void DisableControls()
     {
-        // If the input key pressed is the up arrow on the keyboard...
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            // The surface effector 2D's speed will boost.
-            surfaceEffector2D.speed = boostSpeed;
-        }
-        // Otherwise, if no other key is pressed...
-        else
-        {
-            // The surface effector 2D's speed goes back to normal.
-            surfaceEffector2D.speed = normalSpeed;
-        }
+       canMove = false;
     }
 
     // The Player rotation controls are stored in a method.
@@ -70,6 +68,22 @@ public class SupergliderController : MonoBehaviour
         {
             // The Rigidbody 2D component will rotate the player on the right, thanks to the negative value.
             rigid2d.AddTorque(-rotateAmount);
+        }
+    }
+
+    void RespondToBoost ()
+    {
+        // If the input key pressed is the up arrow on the keyboard...
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            // The surface effector 2D's speed will boost.
+            surfaceEffector2D.speed = boostSpeed;
+        }
+        // Otherwise, if no other key is pressed...
+        else
+        {
+            // The surface effector 2D's speed goes back to normal.
+            surfaceEffector2D.speed = normalSpeed;
         }
     }
 }

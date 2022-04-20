@@ -12,15 +12,27 @@ public class CrashDetector : MonoBehaviour
     // Serialized particle system named as the head crash effect created in hierarchy.
     // In Unity, the head crash effect asset in hierarchy must be manually linked to the script component.
     [SerializeField] ParticleSystem headCrashEffect;
-    
+
+    // Serialized audio source variable, allowing to select different sound effects for one game object.
+    [SerializeField] AudioClip crashSFX;
+
+    // Crash state boolean variable set to default to false. 
+    bool hasCrashed = false;
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Ground")
+        // If the player hits the ground on its trigger collider (head) and hasn't crashed already...
+        if (other.tag == "Ground" && !hasCrashed)
         {
-            // Play the head crash particle effect
+            // The player's crash state equals to true and therefore, the rest of the condition can be executed.
+            hasCrashed = true;
+            // Find the player controller and disable it,
+            FindObjectOfType<SupergliderController>().DisableControls();
+            // Play the head crash particle effect,
             headCrashEffect.Play();
-            // And reload level 1 at the beginning
-            // with using a delay thanks to the Invoke method.
+            // Play the crash sound effect only once,
+            GetComponent<AudioSource>().PlayOneShot(crashSFX);
+            // And reload level 1 at the beginning, using a delay thanks to the Invoke method.
             Invoke("ReloadScene", delayAmount);
         }
     }

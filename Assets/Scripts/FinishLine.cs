@@ -19,10 +19,11 @@ public class FinishLine : MonoBehaviour
         // If the gameobject controlled by the player collides with the trigger...
         if (other.tag == "Player")
         {
-            // Play the finish particle effect
+            // Play the finish particle effect,
             finishEffect.Play();
-            // And reload level 1 at the beginning
-            // with using a delay thanks to the Invoke method.
+            // Play the sound effect component,
+            GetComponent<AudioSource>().Play();
+            // And reload level 1 at the beginning, using a delay thanks to the Invoke method.
             Invoke("ReloadScene", delayAmount);
         }
     }
