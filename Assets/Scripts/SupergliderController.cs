@@ -5,13 +5,16 @@ using UnityEngine;
 public class SupergliderController : MonoBehaviour
 {
     // Serialized variable that sets the rotation (or torque) amount of the player.
-    [SerializeField] float rotateAmount = 1f;
+    [SerializeField] float rotateAmount = 10f;
 
     // Serialized variable that sets the player's boost speed.
-    [SerializeField] float boostSpeed = 70f;
+    [SerializeField] float boostSpeed = 20f;
 
     // Serialized variable that sets the player's normal speed.
-    [SerializeField] float normalSpeed = 35f;
+    [SerializeField] float normalSpeed = 45f;
+
+    // Serialized variable that sets the player's slow speed.
+    [SerializeField] float slowSpeed = 10f;
 
     // Creation of a Rigidbody2D component variable.
     Rigidbody2D rigid2d;
@@ -78,6 +81,12 @@ public class SupergliderController : MonoBehaviour
         {
             // The surface effector 2D's speed will boost.
             surfaceEffector2D.speed = boostSpeed;
+        }
+        // Or if the input key pressed is the down arrow on the keyboard...
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            // The surface effector 2D's speed will boost.
+            surfaceEffector2D.speed = slowSpeed;
         }
         // Otherwise, if no other key is pressed...
         else
